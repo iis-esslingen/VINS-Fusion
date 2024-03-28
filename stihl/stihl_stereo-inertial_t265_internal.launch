@@ -1,0 +1,24 @@
+<launch>
+    <arg name="traj_file_name" default="" />
+    <arg name="lc_traj_file_name" default="" />
+
+    <arg name="bag" default="" />
+    <arg name="bag_start" default="0" />
+    <arg name="duration" default="100000" />
+
+    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find vins)/../config/vins_rviz_config.rviz" />
+    <node name="vins_estimator" pkg="vins" type="vins_node" args="/workspaces/catkin_ws/src/stihl/config.yaml" output="screen" />
+    <node name="loop_fusion_node" pkg="loop_fusion" type="loop_fusion_node" args="/workspaces/catkin_ws/src/stihl/config.yaml" output="screen" />
+
+    <node name="recorder_estimate1" pkg="vins" type="save_trajectory_node.py">
+        <param name="topic" type="string" value="/vins_estimator/path" />
+        <param name="file_name" type="string" value="$(arg traj_file_name)" />
+    </node>
+
+    <node name="recorder_estimate2" pkg="vins" type="save_trajectory_node.py">
+        <param name="topic" type="string" value="/loop_fusion_node/pose_graph_path" />
+        <param name="file_name" type="string" value="$(arg lc_traj_file_name)" />
+    </node>
+
+    <node pkg="rosbag" type="play" name="rosbag" args="-d 1 -s $(arg bag_start) -u $(arg duration) $(arg bag)" required="true"/>
+</launch>

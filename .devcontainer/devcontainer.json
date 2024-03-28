@@ -1,0 +1,9 @@
+{
+	"dockerFile": "../docker/Dockerfile",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/catkin_ws/src,type=bind",
+	"workspaceFolder": "/workspaces",
+	"mounts": [
+		"source=/home/user/Desktop,target=/workspaces/mounted_directory,type=bind"
+	],
+	"runArgs": ["--privileged"]
+}
