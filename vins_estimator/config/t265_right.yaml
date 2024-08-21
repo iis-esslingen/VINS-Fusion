@@ -1,7 +1,7 @@
 %YAML:1.0
 ---
-model_type: PINHOLE
-camera_name: camera
+model_type: KANNALA_BRANDT
+camera_name: t265_right
 image_width: 848
 image_height: 800
 distortion_parameters:

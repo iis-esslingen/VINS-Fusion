@@ -1,0 +1,16 @@
+%YAML:1.0
+---
+model_type: PINHOLE
+camera_name: pi-cam-02
+image_width: 640
+image_height: 480
+distortion_parameters:
+   k1: -0.04083806866524706
+   k2: 0.010512320631044807
+   p1: -0.020992672094212645
+   p2: 0.008848039004781132
+projection_parameters:
+   fx: 306.4922725227081
+   fy: 306.14812355174007
+   cx: 320.22100395920455
+   cy: 234.9227867128218

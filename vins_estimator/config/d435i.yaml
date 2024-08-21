@@ -1,0 +1,16 @@
+%YAML:1.0
+---
+model_type: PINHOLE
+camera_name: d435i
+image_width: 640
+image_height: 480
+distortion_parameters:
+   k1: 0.07561607662577634
+   k2: -0.2088729975389971
+   p1: -0.0023347441072184756
+   p2: 0.004010356017731083
+projection_parameters:
+   fx: 596.1950425915236
+   fy: 593.1411835433107
+   cx: 327.0463454538411
+   cy: 245.16142133264628
