@@ -1,6 +1,6 @@
 %YAML:1.0
 ---
-model_type: KANNALA_BRANDT
+model_type: PINHOLE
 camera_name: t265_left
 image_width: 848
 image_height: 800
