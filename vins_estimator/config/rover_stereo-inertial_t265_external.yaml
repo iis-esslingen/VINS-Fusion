@@ -5,7 +5,7 @@
 imu: 1         
 num_of_cam: 2  
 
-imu_topic: "/vn100/imu"
+imu_topic: "/vn100/imu_interp"
 image0_topic: "/t265/image_left"
 image1_topic: "/t265/image_right"
 output_path: "~/output/"
