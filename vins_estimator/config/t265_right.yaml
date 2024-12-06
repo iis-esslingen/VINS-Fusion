@@ -1,0 +1,16 @@
+%YAML:1.0
+---
+model_type: PINHOLE
+camera_name: t265_right
+image_width: 848
+image_height: 800
+distortion_parameters:
+   k1: -0.011950967309164085
+   k2: 0.0530642563172375
+   p1: -0.049469178559530994
+   p2: 0.011573768486635416
+projection_parameters:
+   fx: 280.311263999059
+   fy: 279.5434630904508
+   cx: 431.35302371548494
+   cy: 388.5071222043099

@@ -1,0 +1,51 @@
+<launch>
+    <!-- what ros bag to play -->
+    <arg name="bag_start"   default="0" />              
+    <arg name="duration"    default="10000" />
+    <arg name="bag_rate"    default="1" />
+    <arg name="do_bag"      default="false" />          
+    <arg name="bag"         default="" />
+    <arg name="show_rviz"   default="true" />
+
+    <!-- saving trajectory path and timing information -->
+    <arg name="do_save_traj"        default="false" />
+    <arg name="traj_file_name"      default="" />
+
+    <!-- enable loop closure detection and correction -->
+    <arg name="do_lc"               default="true" />
+    
+    <group if="$(arg show_rviz)">
+        <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find vins)/../config/vins_rviz_config.rviz" />
+    </group>
+
+    <node name="vins_estimator" pkg="vins" type="vins_node" args="$(find vins)/config/rover_mono-inertial_d435i_external.yaml" output="screen" />
+    
+    <!-- play the dataset -->
+    <group if="$(arg do_bag)">
+        <node pkg="rosbag" type="play" name="rosbag" args="-d 1 -r $(arg bag_rate) -s $(arg bag_start) -u $(arg duration) $(arg bag)" required="true"/>
+    </group>
+
+    <!-- record the trajectory if enabled -->
+    <group if="$(arg do_save_traj)">
+        <group unless="$(arg do_lc)">
+            <node name="recorder_estimate" pkg="vins" type="save_trajectory_node.py" output="screen" required="true">
+                <param name="file_name"     type="string"   value="$(arg traj_file_name)" />
+                <param name="topic"         type="string"   value="/vins_estimator/path" />
+            </node>
+        </group>
+    </group>
+
+    <!-- Loop Closure Detection and Correction -->
+    <group if="$(arg do_lc)">
+        <node name="loop_fusion_node" pkg="loop_fusion" type="loop_fusion_node" args="$(find vins)/config/rover_mono-inertial_d435i_external.yaml" output="screen" />
+
+        <!-- OOUTPUT: path viz of loop closure -->
+        <group if="$(arg do_save_traj)">
+            <node name="recorder_estimate" pkg="vins" type="save_trajectory_node.py" output="screen" required="true">
+                <param name="file_name"     type="string"   value="$(arg traj_file_name)" /> 
+                <param name="topic"         type="string"   value="/loop_fusion_node/pose_graph_path" />
+            </node>
+        </group>
+    </group>
+
+</launch>
