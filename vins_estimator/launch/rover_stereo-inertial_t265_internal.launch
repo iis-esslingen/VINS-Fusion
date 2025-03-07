@@ -9,6 +9,8 @@
     <!-- saving trajectory path and timing information -->
     <arg name="do_save_traj"        default="false" />
     <arg name="traj_file_name"      default="" />
+    <arg name="do_save_resource"    default="false" />
+    <arg name="resource_file_name"    default="" />
 
     <!-- enable loop closure detection and correction -->
     <arg name="do_lc"               default="true" />
@@ -43,6 +45,12 @@
                 <param name="topic"         type="string"   value="/loop_fusion_node/pose_graph_path" />
             </node>
         </group>
+    </group>
+
+    <group if="$(arg do_save_resource)">
+        <include file="$(find cpu_monitor)/launch/cpu_monitor.launch">
+            <arg name="csv_file" value="$(arg resource_file_name)"/>
+        </include>
     </group>
 
 </launch>
